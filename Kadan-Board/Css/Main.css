@@ -41,4 +41,11 @@
     padding: 20px;
     display: flex;
     background-color: rgba(244,245,249,255);
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1036px) {
+    .return-div .main-parent{
+        width: 30vw;
+    }
 }

@@ -15,8 +15,8 @@ import in_progress from '../src/assets/in-progress.svg'
 import Cancelled from '../src/assets/Cancelled.svg'
 import imageA from "../src/assets/human.png"
 
-
 import Card from "../components/Card";
+import '../Css/Main.css'
 
 const prioritySvgMap = {
     0: priority0,
@@ -35,11 +35,11 @@ const prioritySvgMap = {
 };
 
 const priorityNameMap = {
-    0: 'Low',
-    1: 'Medium',
-    2: 'High',
-    3: 'Urgent',
-    4: 'Critical',
+    0:'No Priority',
+    1: 'Low',
+    2: 'Medium',
+    3: 'High',
+    4: 'Urgent',
 };
 
 const Main = ({ groupBy, orderBy }) => {
@@ -91,50 +91,30 @@ const Main = ({ groupBy, orderBy }) => {
     const renderGroupedTickets = () => {
         const grouped = groupTickets();
         return Object.entries(grouped).map(([groupKey, groupTickets], index) => (
-            <div key={groupKey} style={{ marginBottom: '20px', width: '20%' }}>
+            <div key={groupKey} className='main-parent'>
 
-                <div style={{width:"90%"}}>
-                    <div style={{float:"left"}}>
+                <div className='title-container'>
+                    <div className='title-head-left'>
                         {groupBy == "priority" ?
-                        <img
-                            src={groupTickets[index] ? prioritySvgMap[groupTickets[index].priority] : ""}
-                            style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: "10px", marginLeft: "10px" }}
-                        />
+                        <img src={groupTickets[index] ? prioritySvgMap[groupTickets[index].priority] : ""}/>
                         : groupBy == "userId" ? <img
                         src={imageA}
                         style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: "10px", marginLeft: "10px" }}
                     />:
-                            <img
-                                src={groupTickets[index] ? prioritySvgMap[groupTickets[index].status] : ""}
-                                style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: "10px", marginLeft: "10px" }}
-                            />
+                            <img src={groupTickets[index] ? prioritySvgMap[groupTickets[index].status] : ""}/>
                     }
 
                     <div style={{float:"right",fontSize:"14px"}}>{priorityNameMap[groupKey] || groupKey}</div>
                     </div>
                     
-                    <div style={{float:"right"}}>
-                        <img
-                            src={add}
-                            style={{  width: '20px', height: '20px', borderRadius: '50%' }}
-                        />
-                        <img
-                            src={threeDotMenu}
-                            style={{ float: "right", width: '20px', height: '20px', borderRadius: '50%' }}
-                        />
-
+                    <div className='title-head-right'>
+                        <img src={add}/>
+                        <img src={threeDotMenu}/>
                     </div>
 
                 </div>
 
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '20px',
-                        width: '100%',
-                    }}
-                >
+                <div className='sort-cards'>
                     {sortTickets(groupTickets).map((ticket) => (
                         <Card
                             key={ticket.id}
@@ -151,7 +131,7 @@ const Main = ({ groupBy, orderBy }) => {
         ));
     };
 
-    return <div style={{height:"1000px", padding: '20px', display: 'flex',backgroundColor:"rgba(244,245,249,255)" }}>{renderGroupedTickets()}</div>;
+    return <div className='return-div'>{renderGroupedTickets()}</div>;
 };
 
 export default Main;

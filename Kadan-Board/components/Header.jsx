@@ -34,12 +34,8 @@ const Header = ({sortTickets,groupTickets,groupby,orderby}) => {
             <GroupSelectCard setGroupby = {groupTickets} setOrderby = {sortTickets} groupby = {groupby} orderby = {orderby} setOpenDisplay = {setOpenDisplay} />
 
         }
-       </div>
-        
-
+       </div> 
     </>
-
-
 }
 
 export default Header

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import priority0 from '../src/assets/No-priority.svg';
-import priority1 from '../src/assets/SVG - Urgent Priority colour.svg';
-import priority2 from '../src/assets/Img - Low Priority.svg';
-import priority3 from '../src/assets/Img - Low Priority.svg';
-import priority4 from '../src/assets/Img - High Priority.svg';
+import priority1 from '../src/assets/Img - Low Priority.svg';
+import priority2 from '../src/assets/Img - Medium Priority.svg';
+import priority3 from '../src/assets/Img - High Priority.svg';
+import priority4 from '../src/assets/SVG - Urgent Priority colour.svg';
 import todo0 from '../src/assets/To-do.svg';
 import threeDotMenu from '../src/assets/3 dot menu.svg'
 import add from '../src/assets/add.svg'
@@ -92,28 +92,31 @@ const Main = ({ groupBy, orderBy }) => {
         const grouped = groupTickets();
         return Object.entries(grouped).map(([groupKey, groupTickets], index) => (
             <div key={groupKey} className='main-parent'>
-
                 <div className='title-container'>
                     <div className='title-head-left'>
-                        {groupBy == "priority" ?
-                        <img src={groupTickets[index] ? prioritySvgMap[groupTickets[index].priority] : ""}/>
-                        : groupBy == "userId" ? <img
-                        src={imageA}
-                        style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: "10px", marginLeft: "10px" }}
-                    />:
-                            <img src={groupTickets[index] ? prioritySvgMap[groupTickets[index].status] : ""}/>
-                    }
-
-                    <div style={{float:"right",fontSize:"14px"}}>{priorityNameMap[groupKey] || groupKey}</div>
+                        {/* Determine the image source based on grouping criteria */}
+                        {groupBy === "priority" ? (
+                            <img src={groupTickets[0] ? prioritySvgMap[groupTickets[0].priority] : ""} alt="Priority" />
+                        ) : groupBy === "userId" ? (
+                            <img
+                                src={imageA}
+                                style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: "10px", marginLeft: "10px" }}
+                                alt="User"
+                            />
+                        ) : (
+                            <img src={groupTickets[0] ? prioritySvgMap[groupTickets[0].status] : ""} alt="Status" />
+                        )}
+                        <div style={{ float: "right", fontSize: "14px" }}>
+                            {priorityNameMap[groupKey] || groupKey}
+                        </div>
                     </div>
-                    
+    
                     <div className='title-head-right'>
-                        <img src={add}/>
-                        <img src={threeDotMenu}/>
+                        <img src={add} alt="Add" />
+                        <img src={threeDotMenu} alt="Menu" />
                     </div>
-
                 </div>
-
+    
                 <div className='sort-cards'>
                     {sortTickets(groupTickets).map((ticket) => (
                         <Card
@@ -121,15 +124,16 @@ const Main = ({ groupBy, orderBy }) => {
                             id={ticket.id}
                             title={ticket.title}
                             status={ticket.status}
-                            priority={ticket.priority}
+                            priority={ticket ? prioritySvgMap[ticket.priority] : ""}
                             tag={ticket.tag[0]}
-                            svg = {ticket ? prioritySvgMap[ticket.status] : ""}
+                            svg={ticket ? prioritySvgMap[ticket.status] : ""}
                         />
                     ))}
                 </div>
             </div>
         ));
     };
+    
 
     return <div className='return-div'>{renderGroupedTickets()}</div>;
 };

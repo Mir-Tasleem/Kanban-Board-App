@@ -55,4 +55,4 @@ const GroupSelectCard = ({setGroupby,setOrderby,groupby,orderby,setOpenDisplay})
     </>
 }
 
-export default GroupSelectCard
+export default GroupSelectCard;
